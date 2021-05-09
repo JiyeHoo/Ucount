@@ -100,9 +100,9 @@ public class StatisticsActivity extends AppCompatActivity implements StatisticsV
 
     @Override
     public void drawPieChart() {
-        PieChart chart_cost = (PieChart) findViewById(R.id.chart_cost);
-        PieChart chart_earn = (PieChart) findViewById(R.id.chart_earn);
-        List<PieEntry> entries_cost = new ArrayList<PieEntry>();
+        PieChart chart_cost = findViewById(R.id.chart_cost);
+        PieChart chart_earn = findViewById(R.id.chart_earn);
+        List<PieEntry> entries_cost = new ArrayList<>();
         List<PieEntry> entries_earn = new ArrayList<PieEntry>();
         Cursor cursor_cost = LitePal.findBySQL("select sum(money),typename from MoneyItem " +
                 "where bookId = ? and " +

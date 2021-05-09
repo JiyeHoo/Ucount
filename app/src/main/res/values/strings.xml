@@ -18,4 +18,5 @@
     <string name="page3_count">0/30</string>
 
     <string name="stats_button_string">statistics</string>
+    <string name="main_null_name">没有输入新账本名称哦</string>
 </resources>

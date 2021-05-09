@@ -1,23 +1,10 @@
 package com.yuukidach.ucount;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.ItemTouchHelper;
-
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,8 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.yuukidach.ucount.view.adapter.BookItemAdapter;
-import com.yuukidach.ucount.view.adapter.MoneyItemAdapter;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.yuukidach.ucount.callback.BookItemCallback;
 import com.yuukidach.ucount.callback.MainItemCallback;
 import com.yuukidach.ucount.model.BookItem;
@@ -35,8 +28,9 @@ import com.yuukidach.ucount.model.ImgUtils;
 import com.yuukidach.ucount.model.MoneyItem;
 import com.yuukidach.ucount.presenter.MainPresenter;
 import com.yuukidach.ucount.view.MainView;
+import com.yuukidach.ucount.view.adapter.BookItemAdapter;
+import com.yuukidach.ucount.view.adapter.MoneyItemAdapter;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 import at.markushi.ui.CircleButton;
@@ -46,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private final MainPresenter mainPresenter = new MainPresenter(this, imgUtils);
 
     private Button showBtn;
-    private ImageButton statsBtn;
     private TextView monthlyCost;
     private TextView monthlyEarn;
     private ImageView headerImg;
@@ -60,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     public static String PACKAGE_NAME;
     public static Resources resources;
-    public DecimalFormat decimalFormat = new DecimalFormat("0.00");
+//    public DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
     private static final String TAG = "MainActivity";
 
@@ -74,66 +67,43 @@ public class MainActivity extends AppCompatActivity implements MainView {
         PACKAGE_NAME = getApplicationContext().getPackageName();
         resources = getResources();
 
-        showBtn = (Button) findViewById(R.id.show_money_button);
-        statsBtn = (ImageButton) findViewById(R.id.stats_button);
-        monthlyCost = (TextView) findViewById(R.id.monthly_cost_money);
-        monthlyEarn = (TextView) findViewById(R.id.monthly_earn_money);
-        headerImg = (ImageView) findViewById(R.id.header_img);
-        CircleButton addBtn = (CircleButton) findViewById(R.id.add_button);
-        ImageButton addBookButton = (ImageButton) findViewById(R.id.add_book_button);
-        MoneyItemRecyclerView = (RecyclerView) findViewById(R.id.in_and_out_items);
+        showBtn = findViewById(R.id.show_money_button);
+        ImageButton statsBtn = findViewById(R.id.stats_button);
+        monthlyCost = findViewById(R.id.monthly_cost_money);
+        monthlyEarn = findViewById(R.id.monthly_earn_money);
+        headerImg = findViewById(R.id.header_img);
+        CircleButton addBtn = findViewById(R.id.add_button);
+        ImageButton addBookButton = findViewById(R.id.add_book_button);
+        MoneyItemRecyclerView = findViewById(R.id.in_and_out_items);
         // drawer
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_of_books);
-        bookItemRecyclerView = (RecyclerView) findViewById(R.id.book_list);
-        bookLinearLayout = (LinearLayout) findViewById(R.id.left_drawer);
-        drawerBanner = (ImageView) findViewById(R.id.drawer_banner);
+        drawerLayout = findViewById(R.id.drawer_of_books);
+        bookItemRecyclerView = findViewById(R.id.book_list);
+        bookLinearLayout = findViewById(R.id.left_drawer);
+        drawerBanner = findViewById(R.id.drawer_banner);
 
-        showBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String str = showBtn.getText().toString();
-                mainPresenter.onShowBalanceClick(str);
-            }
+        showBtn.setOnClickListener(v -> {
+            String str = showBtn.getText().toString();
+            mainPresenter.onShowBalanceClick(str);
         });
 
         // start activity to add cost or earning item
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToAddItem();
-            }
-        });
+        addBtn.setOnClickListener(v -> navigateToAddItem());
 
         // start activity to statistics
-        statsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToStatistics();
-            }
-        });
+        statsBtn.setOnClickListener(v -> navigateToStatistics());
 
-        addBookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainPresenter.onAddBookClick();
-            }
-        });
+        addBookButton.setOnClickListener(v ->
+                mainPresenter.onAddBookClick());
 
         // 设置首页header图片长按以更换图片
-        headerImg.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                mainPresenter.onImageLongClick(ImageType.HEADER);
-                return false;
-            }
+        headerImg.setOnLongClickListener(v -> {
+            mainPresenter.onImageLongClick(ImageType.HEADER);
+            return false;
         });
 
-        drawerBanner.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                mainPresenter.onImageLongClick(ImageType.DRAWER);
-                return false;
-            }
+        drawerBanner.setOnLongClickListener(v -> {
+            mainPresenter.onImageLongClick(ImageType.DRAWER);
+            return false;
         });
     }
 
@@ -246,13 +216,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         );
         BookItemAdapter bookAdapter = new BookItemAdapter(mainPresenter);
-        bookAdapter.setOnItemClickListener(new BookItemAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                mainPresenter.updateBookItemView(position);
-                drawerLayout.closeDrawer(bookLinearLayout);
-                onResume();
-            }
+        bookAdapter.setOnItemClickListener((view, position) -> {
+            mainPresenter.updateBookItemView(position);
+            drawerLayout.closeDrawer(bookLinearLayout);
+            onResume();
         });
 
         bookItemRecyclerView.setAdapter(bookAdapter);
@@ -271,21 +238,15 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         builder.setView(book_title);
 
-        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (!book_title.getText().toString().isEmpty()) {
-                    mainPresenter.onAddBookConfirmClick(book_title.getText().toString());
-                    onResume();
-                } else {
-                    // TODO: use strings.xml
-                    Toast.makeText(getApplicationContext(), "没有输入新账本名称哦", Toast.LENGTH_SHORT).show();
-                }
+        builder.setPositiveButton(R.string.confirm, (dialog, which) -> {
+            if (!book_title.getText().toString().isEmpty()) {
+                mainPresenter.onAddBookConfirmClick(book_title.getText().toString());
+                onResume();
+            } else {
+                // TODO: use strings.xml
+                Toast.makeText(getApplicationContext(), R.string.main_null_name, Toast.LENGTH_SHORT).show();
             }
-        }).setNegativeButton(R.string.cancle, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
+        }).setNegativeButton(R.string.cancle, (dialog, which) -> {
         }).show();
     }
 
