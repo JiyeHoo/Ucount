@@ -19,4 +19,8 @@
 
     <string name="stats_button_string">statistics</string>
     <string name="main_null_name">没有输入新账本名称哦</string>
+    <string name="tv_login_title">勐翔记账</string>
+    <string name="et_login_user">手机/邮箱</string>
+    <string name="et_login_pwd">密码</string>
+    <string name="btn_login">登录</string>
 </resources>

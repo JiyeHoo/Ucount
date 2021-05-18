@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">宅记</string>
+    <string name="app_name">勐翔记账</string>
     <string name="show_balance">显示余额</string>
     <string name="monthly_income_title">当月收入</string>
     <string name="monthly_expenditure_title">当月支出</string>
@@ -13,4 +13,16 @@
     <string name="previous">上一个</string>
     <string name="next">下一个</string>
     <string name="clear">清零</string>
+
+    <string name="page3_banner">备注</string>
+    <string name="page3_edit_hint">记录点滴生活&#8230;</string>
+    <string name="page3_count">0/30</string>
+
+    <string name="stats_button_string">statistics</string>
+    <string name="main_null_name">没有输入新账本名称哦</string>
+    <string name="tv_login_title">勐翔记账</string>
+    <string name="et_login_user">手机/邮箱</string>
+    <string name="et_login_pwd">密码</string>
+    <string name="btn_login">登录</string>
+
 </resources>
